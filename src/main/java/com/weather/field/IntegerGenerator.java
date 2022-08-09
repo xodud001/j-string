@@ -4,10 +4,10 @@ import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class IntegerGenerator implements FieldGenerator{
+public class IntegerGenerator extends AbstractFieldGenerator{
 
     @Override
-    public String generateField(Field field) {
+    protected String createValue(Field field) {
         return "1";
     }
 

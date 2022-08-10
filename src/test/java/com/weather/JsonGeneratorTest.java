@@ -6,6 +6,7 @@ import com.weather.printer.GenericPrinter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -54,7 +55,6 @@ class JsonGeneratorTest {
         assertThat(json).isEqualTo("{" +
                 "\"test\":\"TYPE1\"" +
                 "}");
-
     }
 
     static class EnumType{
@@ -66,9 +66,37 @@ class JsonGeneratorTest {
         TYPE2;
     }
 
-    @DisplayName("4. Collection Type")
+    @DisplayName("4. RealNumber Test")
     @Test
     void test4(){
+        String json = generator.generate(RealNumberType.class);
+
+        assertThat(json).isEqualTo("{" +
+                "\"test\":1.0" +
+                "}");
+    }
+
+    static class RealNumberType {
+        private Double test;
+    }
+
+    @DisplayName("5. Boolean Test")
+    @Test
+    void test5(){
+        String json = generator.generate(BooleanType.class);
+
+        assertThat(json).isEqualTo("{" +
+                "\"test\":\"true\"" +
+                "}");
+    }
+
+    static class BooleanType {
+        private Boolean test;
+    }
+
+    @DisplayName("6. Collection Type")
+    @Test
+    void test6(){
         Field[] declaredFields = CollectionType.class.getDeclaredFields();
         Field declaredField = declaredFields[0];
 

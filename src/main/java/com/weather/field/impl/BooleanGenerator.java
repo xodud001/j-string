@@ -1,4 +1,7 @@
-package com.weather.field;
+package com.weather.field.impl;
+
+import com.weather.JsonGenerator;
+import com.weather.field.AbstractFieldGenerator;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,7 +16,7 @@ public class BooleanGenerator extends AbstractFieldGenerator {
     }
 
     @Override
-    protected String createValue(Field field) {
+    protected String createValue(JsonGenerator jsonGenerator, Field field) {
         return "\"true\"";
     }
 }

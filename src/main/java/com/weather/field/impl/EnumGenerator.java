@@ -1,8 +1,11 @@
-package com.weather.field;
+package com.weather.field.impl;
+
+import com.weather.JsonGenerator;
+import com.weather.field.AbstractFieldGenerator;
 
 import java.lang.reflect.Field;
 
-public class EnumGenerator extends AbstractFieldGenerator{
+public class EnumGenerator extends AbstractFieldGenerator {
 
     @Override
     public boolean isSupported(Class<?> fieldType) {
@@ -10,7 +13,7 @@ public class EnumGenerator extends AbstractFieldGenerator{
     }
 
     @Override
-    protected String createValue(Field field) {
+    protected String createValue(JsonGenerator jsonGenerator, Field field) {
         Field enumField = field.getType().getDeclaredFields()[0];
         return "\"" + enumField.getName() + "\"";
     }

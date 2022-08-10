@@ -1,8 +1,11 @@
-package com.weather.field;
+package com.weather.field.impl;
+
+import com.weather.JsonGenerator;
+import com.weather.field.AbstractFieldGenerator;
 
 import java.lang.reflect.Field;
 
-public class StringGenerator extends AbstractFieldGenerator{
+public class StringGenerator extends AbstractFieldGenerator {
 
     @Override
     public boolean isSupported(Class<?> fieldType) {
@@ -10,7 +13,7 @@ public class StringGenerator extends AbstractFieldGenerator{
     }
 
     @Override
-    protected String createValue(Field field) {
+    protected String createValue(JsonGenerator jsonGenerator, Field field) {
         return "\"String\"";
     }
 }

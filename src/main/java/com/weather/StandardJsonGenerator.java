@@ -27,7 +27,7 @@ public class StandardJsonGenerator implements JsonGenerator {
         for (Field declaredField : declaredFields) {
             String parsedField = fieldGenerators.stream()
                     .filter(fg -> fg.isSupported(declaredField.getType()))
-                    .map(fg -> fg.generateField(declaredField))
+                    .map(fg -> fg.generateField(this, declaredField))
                     .findFirst()
                     .orElseThrow(() -> new NotSupportedFieldException(declaredField.getType() + "is don't support."));
 

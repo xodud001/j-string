@@ -3,6 +3,7 @@ package com.weather;
 import com.weather.exception.NotSupportedFieldException;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -17,6 +18,8 @@ public enum JsonType {
     ARRAY;
 
     public static JsonType getJsonType(Class<?> type){
+        Objects.requireNonNull(type);
+
         if(isObject(type)){
             return OBJECT;
         } else if (isCollection(type)){

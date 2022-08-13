@@ -6,17 +6,16 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DefinitionFactory {
 
-
-    // Object
     public static JsonFieldDefinition from(Class<?> type){
         List<JsonFieldDefinition> childs = getJsonFieldDefinitions(type);
         return new ObjectType(null, JsonType.OBJECT, childs);
     }
 
-    public static JsonFieldDefinition from(String fieldName, Class<?> type){
+    private static JsonFieldDefinition from(String fieldName, Class<?> type){
         List<JsonFieldDefinition> childs = getJsonFieldDefinitions(type);
         return new ObjectType(fieldName, JsonType.OBJECT, childs);
     }
@@ -27,11 +26,24 @@ public class DefinitionFactory {
 
         Field[] declaredFields = type.getDeclaredFields();
         for (Field declaredField : declaredFields) {
-            declaredField.getGenericType();
+            childs.add(getJsonFieldDefinition(declaredField));
         } return childs;
     }
 
     // Array - 제네릭 타입 지원
 
-    // Normal
+    private static JsonFieldDefinition getJsonFieldDefinition(Field field){
+        Objects.requireNonNull(field);
+
+        Class<?> currentType = field.getType();
+        JsonType jsonType = JsonType.getJsonType(currentType);
+        switch(jsonType){
+            case OBJECT:
+                return from(field.getName(), currentType);
+            case ARRAY:
+                return null;
+            default:
+                return new NormalType(field.getName(), jsonType);
+        }
+    }
 }

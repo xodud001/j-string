@@ -13,9 +13,12 @@ public abstract class BasedDefinition implements JsonFieldDefinition {
     private final boolean isRequiredKeyName;
 
     protected BasedDefinition(String keyName, JsonType valueType, List<JsonFieldDefinition> children) {
+
         this.keyName = keyName;
         this.valueType = valueType;
-        this.children.addAll(children);
+        if(children != null){
+            this.children.addAll(children);
+        }
         this.isRequiredKeyName = keyName != null;
     }
 
@@ -30,8 +33,8 @@ public abstract class BasedDefinition implements JsonFieldDefinition {
     }
 
     @Override
-    public boolean hasChild() {
-        return this.children.size() > 0;
+    public List<JsonFieldDefinition> getChildren() {
+        return this.children;
     }
 
     @Override

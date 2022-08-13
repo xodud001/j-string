@@ -31,6 +31,7 @@ class JsonTypeTest {
         assertThat(stringType).isEqualTo(JsonType.STRING);
         assertThat(numberType).isEqualTo(JsonType.NUMBER);
     }
+
     @DisplayName("2. get JsonType from class type - exception")
     @Test
     void test2(){

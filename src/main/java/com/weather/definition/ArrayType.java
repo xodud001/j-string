@@ -6,6 +6,6 @@ import java.util.List;
 
 public class ArrayType extends BasedDefinition {
     protected ArrayType(String keyName, JsonType valueType, List<JsonFieldDefinition> children) {
-        super(keyName, valueType, children);
+        super(keyName, valueType, null, children);
     }
 }

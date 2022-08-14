@@ -10,6 +10,8 @@ public interface JsonFieldDefinition {
 
     JsonType getValueType();
 
+    Class<?> getValueClass();
+
     List<JsonFieldDefinition> getChildren();
 
     boolean isRequiredKeyName();

@@ -44,7 +44,7 @@ public class DefinitionFactory {
             case ARRAY:
                 return generateArrayDefinition(field);
             default:
-                return new NormalType(fieldName, jsonType);
+                return new NormalType(fieldName, jsonType, currentType);
         }
     }
 
@@ -84,7 +84,7 @@ public class DefinitionFactory {
                 children.add(child);
                 return new ArrayType(null, JsonType.ARRAY, children);
             default:
-                return new NormalType(null, jsonType);
+                return new NormalType(null, jsonType, currentType);
         }
 
     }

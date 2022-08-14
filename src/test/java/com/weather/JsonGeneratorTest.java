@@ -2,6 +2,11 @@ package com.weather;
 
 import com.weather.printer.FieldPrinter;
 import com.weather.printer.GenericPrinter;
+import com.weather.value.BooleanGenerator;
+import com.weather.value.NumberGenerator;
+import com.weather.value.StringGenerator;
+import com.weather.value.ValueGenerator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,13 +22,24 @@ class JsonGeneratorTest {
 
     FieldPrinter fieldPrinter;
     GenericPrinter genericPrinter;
-    JsonGenerator generator = new StandardJsonGenerator();
+    JsonGenerator generator;
+
+    @BeforeEach
+    public void init(){
+        List<ValueGenerator> generators = new ArrayList<>();
+        generators.add(new StringGenerator());
+        generators.add(new NumberGenerator());
+        generators.add(new BooleanGenerator());
+
+        generator = new StandardJsonGenerator(generators);
+    }
 
     @DisplayName("1. String Type")
     @Test
     void test1(){
         String json = generator.generateFieldsOfType(StringType.class);
 
+        System.out.println(json);
         assertThat(json).isEqualTo("{" +
                         "\"test\":\"String\"" +
                 "}");
@@ -33,60 +49,29 @@ class JsonGeneratorTest {
         private String test;
     }
 
-    @DisplayName("2. Integer Type")
+    @DisplayName("2. Number Type")
     @Test
     void test2(){
-        String json = generator.generateFieldsOfType(IntegerType.class);
+        String json = generator.generateFieldsOfType(NumberType.class);
 
+        System.out.println(json);
         assertThat(json).isEqualTo("{" +
                 "\"test\":1" +
                 "}");
     }
 
-    static class IntegerType {
+    static class NumberType {
         private Integer test;
     }
 
-    @DisplayName("3. Enum Type")
-    @Test
-    void test3(){
-        String json = generator.generateFieldsOfType(EnumType.class);
-
-        assertThat(json).isEqualTo("{" +
-                "\"test\":\"TYPE1\"" +
-                "}");
-    }
-
-    static class EnumType{
-        private TestEnum test;
-    }
-
-    static enum TestEnum{
-        TYPE1,
-        TYPE2;
-    }
-
-    @DisplayName("4. RealNumber Test")
-    @Test
-    void test4(){
-        String json = generator.generateFieldsOfType(RealNumberType.class);
-
-        assertThat(json).isEqualTo("{" +
-                "\"test\":1.0" +
-                "}");
-    }
-
-    static class RealNumberType {
-        private Double test;
-    }
-
-    @DisplayName("5. Boolean Test")
+    @DisplayName("3. Boolean Test")
     @Test
     void test5(){
         String json = generator.generateFieldsOfType(BooleanType.class);
 
+        System.out.println(json);
         assertThat(json).isEqualTo("{" +
-                "\"test\":\"true\"" +
+                "\"test\":true" +
                 "}");
     }
 
@@ -94,58 +79,27 @@ class JsonGeneratorTest {
         private Boolean test;
     }
 
-    @DisplayName("6. Collection Type")
+    @DisplayName("4. Collection Type")
     @Test
     void test6() {
-//        String json = generator.generateFieldsOfType(CollectionType.class);
-//
-//        System.out.println(json);
-//        System.out.println(collectionTestJson());
-//        assertThat(json).isEqualTo(collectionTestJson());
-        List<Integer> type = new ArrayList<>();
-        Class<?> typeClass = type.getClass();
-        System.out.println(typeClass);
-        System.out.println(Arrays.toString(typeClass.getGenericInterfaces()));
-        System.out.println(typeClass.getGenericSuperclass());
-        System.out.println(typeClass.getDeclaringClass());
-        System.out.println(typeClass.getTypeName());
-        System.out.println(typeClass.getCanonicalName());
-        System.out.println(typeClass.getComponentType());
-        System.out.println(typeClass.getName());
-        System.out.println(Arrays.toString(typeClass.getSigners()));
-        System.out.println(Arrays.toString(typeClass.getTypeParameters()));
+        String json = generator.generateFieldsOfType(CollectionType.class);
 
-
+        System.out.println(collectionTestJson());
+        assertThat(json).isEqualTo(collectionTestJson());
     }
 
     private String collectionTestJson() {
         return "{" +
-                "\"test\":[" +
-                "1,1,1" +
-                "]" +
+                    "\"test\":[" +
+                        "[" +
+                            "1" +
+                        "]" +
+                    "]" +
                 "}";
     }
 
     static class CollectionType{
-        private List<Integer> numbers;
+        private List<List<Integer>> test;
     }
 
-    @DisplayName("")
-    @Test
-    void test7() throws ClassNotFoundException, NoSuchFieldException {
-        Class<ClassForNameTest> classForNameTestClass = ClassForNameTest.class;
-        for (Field declaredField : classForNameTestClass.getDeclaredFields()) {
-            System.out.println(Arrays.toString(declaredField.getGenericType().getTypeName().replaceAll(">", "").split("<")));
-        }
-
-        ClassLoader classLoader = classForNameTestClass.getClassLoader();
-        System.out.println(classLoader);
-        Field integers = classForNameTestClass.getDeclaredField("integers");
-        System.out.println(integers.getGenericType().getClass().getClassLoader());
-    }
-
-    static class ClassForNameTest{
-        List<List<Integer>> integers;
-        int n1;
-    }
 }

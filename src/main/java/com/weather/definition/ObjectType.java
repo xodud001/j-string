@@ -9,6 +9,6 @@ public class ObjectType extends BasedDefinition{
     protected ObjectType(String keyName,
                          JsonType valueType,
                          List<JsonFieldDefinition> children) {
-        super(keyName, valueType, children);
+        super(keyName, valueType, null, children);
     }
 }

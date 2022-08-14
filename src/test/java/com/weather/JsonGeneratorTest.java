@@ -10,9 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -66,7 +64,7 @@ class JsonGeneratorTest {
 
     @DisplayName("3. Boolean Test")
     @Test
-    void test5(){
+    void test3(){
         String json = generator.generateFieldsOfType(BooleanType.class);
 
         System.out.println(json);
@@ -81,14 +79,14 @@ class JsonGeneratorTest {
 
     @DisplayName("4. Array Type")
     @Test
-    void test6() {
-        String json = generator.generateFieldsOfType(CollectionType.class);
+    void test4() {
+        String json = generator.generateFieldsOfType(ArrayType.class);
 
-        System.out.println(collectionTestJson());
-        assertThat(json).isEqualTo(collectionTestJson());
+        System.out.println(arrayTestJson());
+        assertThat(json).isEqualTo(arrayTestJson());
     }
 
-    private String collectionTestJson() {
+    private String arrayTestJson() {
         return "{" +
                     "\"test\":[" +
                         "[" +
@@ -98,8 +96,47 @@ class JsonGeneratorTest {
                 "}";
     }
 
-    static class CollectionType{
+    static class ArrayType {
         private List<List<Integer>> test;
     }
 
+
+    @DisplayName("5. Integration")
+    @Test
+    void test5(){
+        String json = generator.generateFieldsOfType(IntegrationTest.class);
+
+        System.out.println(json);
+        assertThat(json).isEqualTo(integrationJson());
+    }
+
+    static class IntegrationTest{
+        private String name;
+        private Integer age;
+        private boolean gender;
+        private ObjectType object;
+        private List<List<ObjectType>> array;
+    }
+
+    static class ObjectType{
+        private String value;
+    }
+
+    String integrationJson(){
+        return "{" +
+                "\"name\":\"String\"," +
+                "\"age\":1," +
+                "\"gender\":true," +
+                "\"object\":{" +
+                    "\"value\":\"String\"" +
+                "}," +
+                "\"array\":[" +
+                    "[" +
+                        "{" +
+                            "\"value\":\"String\"" +
+                        "}" +
+                    "]" +
+                "]" +
+                "}";
+    }
 }

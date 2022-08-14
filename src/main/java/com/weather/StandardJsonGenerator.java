@@ -42,7 +42,7 @@ public class StandardJsonGenerator implements JsonGenerator {
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < fields.size() - 1; i++) {
-            builder.append(fields).append(",");
+            builder.append(fields.get(i)).append(",");
         }
         builder.append(fields.get(fields.size() - 1));
 
@@ -57,7 +57,7 @@ public class StandardJsonGenerator implements JsonGenerator {
     private String generateArrayType(JsonFieldDefinition definition) {
         List<JsonFieldDefinition> children = definition.getChildren();
 
-        String result = String.format("[%s]", generate(children.get(0)));;
+        String result = String.format("[%s]", generate(children.get(0)));
         if(definition.isRequiredKeyName()){
             return String.format("\"%s\":%s", definition.getKeyName(), result);
         }else{

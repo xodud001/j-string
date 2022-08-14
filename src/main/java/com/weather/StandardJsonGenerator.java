@@ -17,7 +17,7 @@ public class StandardJsonGenerator implements JsonGenerator {
         this.valueGenerators = valueGenerators;
     }
 
-    public <T> String generateFieldsOfType(Class<T> type){
+    public <T> String generate(Class<T> type){
         JsonFieldDefinition root = DefinitionFactory.from(type);
         return generate(root);
     }

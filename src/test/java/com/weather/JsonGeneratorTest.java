@@ -35,7 +35,7 @@ class JsonGeneratorTest {
     @DisplayName("1. String Type")
     @Test
     void test1(){
-        String json = generator.generateFieldsOfType(StringType.class);
+        String json = generator.generate(StringType.class);
 
         System.out.println(json);
         assertThat(json).isEqualTo("{" +
@@ -50,7 +50,7 @@ class JsonGeneratorTest {
     @DisplayName("2. Number Type")
     @Test
     void test2(){
-        String json = generator.generateFieldsOfType(NumberType.class);
+        String json = generator.generate(NumberType.class);
 
         System.out.println(json);
         assertThat(json).isEqualTo("{" +
@@ -65,7 +65,7 @@ class JsonGeneratorTest {
     @DisplayName("3. Boolean Test")
     @Test
     void test3(){
-        String json = generator.generateFieldsOfType(BooleanType.class);
+        String json = generator.generate(BooleanType.class);
 
         System.out.println(json);
         assertThat(json).isEqualTo("{" +
@@ -80,7 +80,7 @@ class JsonGeneratorTest {
     @DisplayName("4. Array Type")
     @Test
     void test4() {
-        String json = generator.generateFieldsOfType(ArrayType.class);
+        String json = generator.generate(ArrayType.class);
 
         System.out.println(arrayTestJson());
         assertThat(json).isEqualTo(arrayTestJson());
@@ -104,39 +104,43 @@ class JsonGeneratorTest {
     @DisplayName("5. Integration")
     @Test
     void test5(){
-        String json = generator.generateFieldsOfType(IntegrationTest.class);
+        String json = generator.generate(Member.class);
 
         System.out.println(json);
         assertThat(json).isEqualTo(integrationJson());
     }
 
-    static class IntegrationTest{
+    static  class Member{
         private String name;
-        private Integer age;
+        private int age;
+        private Address address;
         private boolean gender;
-        private ObjectType object;
-        private List<List<ObjectType>> array;
+        private List<Belonging> belongings;
     }
-
-    static class ObjectType{
-        private String value;
+    static class Address{
+        private String state;
+        private String city;
+        private String street;
+    }
+    static class Belonging{
+        private String name;
+        private int count;
     }
 
     String integrationJson(){
         return "{" +
                 "\"name\":\"String\"," +
                 "\"age\":1," +
-                "\"gender\":true," +
-                "\"object\":{" +
-                    "\"value\":\"String\"" +
+                "\"address\":{" +
+                    "\"state\":\"String\"," +
+                    "\"city\":\"String\"," +
+                    "\"street\":\"String\"" +
                 "}," +
-                "\"array\":[" +
-                    "[" +
-                        "{" +
-                            "\"value\":\"String\"" +
-                        "}" +
-                    "]" +
-                "]" +
+                "\"gender\":true," +
+                "\"belongings\":[{" +
+                    "\"name\":\"String\"," +
+                    "\"count\":1" +
+                "}]" +
                 "}";
     }
 }

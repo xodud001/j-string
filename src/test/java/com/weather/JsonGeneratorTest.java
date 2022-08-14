@@ -79,7 +79,7 @@ class JsonGeneratorTest {
         private Boolean test;
     }
 
-    @DisplayName("4. Collection Type")
+    @DisplayName("4. Array Type")
     @Test
     void test6() {
         String json = generator.generateFieldsOfType(CollectionType.class);

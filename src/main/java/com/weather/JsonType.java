@@ -3,7 +3,9 @@ package com.weather;
 import com.weather.exception.NotSupportedFieldException;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -22,7 +24,7 @@ public enum JsonType {
 
         if(isObject(type)){
             return OBJECT;
-        } else if (isCollection(type)){
+        } else if (isArray(type)){
             return ARRAY;
         } else if (isBoolean(type)) {
             return BOOLEAN;   
@@ -38,8 +40,9 @@ public enum JsonType {
         return type.getClassLoader() != null && type.getClassLoader().getParent() != null;
     }
 
-    private static boolean isCollection(Class<?> type) {
-        return Collection.class.isAssignableFrom(type);
+    private static boolean isArray(Class<?> type) {
+        return List.class.isAssignableFrom(type) ||
+                Set.class.isAssignableFrom(type);
     }
 
     private static boolean isBoolean(Class<?> type) {

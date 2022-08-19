@@ -124,6 +124,5 @@ String json = generator.generateFieldsOfType(IntegrationTest.class);
 # To Do
 * support various type
   - DateTime Types
-  - Enum Type
 * generate a custom value
 

@@ -137,6 +137,7 @@ class JsonGeneratorTest {
         private Address address;
         private boolean gender;
         private List<Belonging> belongings;
+        private Job job;
     }
     static class Address{
         private String state;
@@ -146,6 +147,11 @@ class JsonGeneratorTest {
     static class Belonging{
         private String name;
         private int count;
+    }
+    static enum Job {
+        Developer,
+        Designer,
+        Director;
     }
 
     String integrationJson(){
@@ -161,7 +167,8 @@ class JsonGeneratorTest {
                 "\"belongings\":[{" +
                     "\"name\":\"String\"," +
                     "\"count\":1" +
-                "}]" +
+                "}]," +
+                "\"job\":\"Developer\"" +
                 "}";
     }
 }

@@ -2,10 +2,8 @@ package com.weather;
 
 import com.weather.printer.FieldPrinter;
 import com.weather.printer.GenericPrinter;
-import com.weather.value.BooleanGenerator;
-import com.weather.value.NumberGenerator;
-import com.weather.value.StringGenerator;
-import com.weather.value.ValueGenerator;
+import com.weather.value.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +26,7 @@ class JsonGeneratorTest {
         generators.add(new StringGenerator());
         generators.add(new NumberGenerator());
         generators.add(new BooleanGenerator());
+        generators.add(new EnumGenerator());
 
         generator = new StandardJsonGenerator(generators);
     }
@@ -100,10 +99,32 @@ class JsonGeneratorTest {
         private List<List<Integer>> test;
     }
 
-
-    @DisplayName("5. Integration")
+    @DisplayName("5. Enum Type")
     @Test
     void test5(){
+        String json = generator.generate(EnumType.class);
+
+        assertThat(json).isEqualTo(enumJson());
+    }
+
+    @NotNull
+    private String enumJson() {
+        return "{" +
+                    "\"test\":\"TYPE1\"" +
+                "}";
+    }
+
+    static class EnumType{
+        private TestEnum test;
+    }
+
+    static enum TestEnum{
+        TYPE1,
+        TYPE2;
+    }
+    @DisplayName("6. Integration")
+    @Test
+    void test6(){
         String json = generator.generate(Member.class);
 
         System.out.println(json);

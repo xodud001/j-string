@@ -21,10 +21,7 @@ public enum JsonType {
 
     public static JsonType getJsonType(Class<?> type){
         Objects.requireNonNull(type);
-
-        if(isObject(type)){
-            return OBJECT;
-        } else if (isArray(type)){
+        if (isArray(type)){
             return ARRAY;
         } else if (isBoolean(type)) {
             return BOOLEAN;   
@@ -32,7 +29,10 @@ public enum JsonType {
             return STRING;
         } else if (isNumber(type)){
             return NUMBER;
+        } else if(isObject(type)){
+            return OBJECT; // Class Loader 기준으로 찾아오기 때문에 맨 마지막으로 가는게 맞는듯
         }
+
         throw new NotSupportedFieldException(type + " is not supported.");
     }
 
@@ -52,7 +52,8 @@ public enum JsonType {
     }
 
     private static boolean isString(Class<?> type) {
-        return String.class.equals(type);
+        return String.class.equals(type) ||
+                Enum.class.isAssignableFrom(type);
     }
 
     private static boolean isNumber(Class<?> type) {

@@ -74,6 +74,9 @@ J-String can generate JSON from classes composed of the following types:
 * **Array**
   - `List<T>`
   - `Set<T>`
+* `Enum`
+
+
 # Sample
 ```java
 class IntegrationTest{

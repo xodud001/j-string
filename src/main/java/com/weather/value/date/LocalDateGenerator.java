@@ -1,4 +1,6 @@
-package com.weather.value;
+package com.weather.value.date;
+
+import com.weather.value.ValueGenerator;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;

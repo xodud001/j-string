@@ -3,14 +3,13 @@ package com.weather;
 import com.weather.printer.FieldPrinter;
 import com.weather.printer.GenericPrinter;
 import com.weather.value.*;
+import com.weather.value.date.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +29,6 @@ class JsonGeneratorTest {
         generators.add(new NumberGenerator());
         generators.add(new BooleanGenerator());
         generators.add(new EnumGenerator());
-        generators.add(new LocalDateGenerator());
-        generators.add(new LocalTimeGenerator());
-        generators.add(new LocalDateTimeGenerator());
 
         generator = new StandardJsonGenerator(generators);
     }
@@ -172,44 +168,5 @@ class JsonGeneratorTest {
                 "\"count\":1" +
                 "}]" +
                 "}";
-    }
-
-    @DisplayName("7. LocalDate")
-    @Test
-    void test7() {
-        String json = generator.generate(LocalDateType.class);
-        System.out.println(json);
-
-        assertThat(json).isEqualTo("{\"test\":\"9999-12-31\"}");
-    }
-
-    static class LocalDateType {
-        private LocalDate test;
-    }
-
-    @DisplayName("8. LocalTime")
-    @Test
-    void test8() {
-        String json = generator.generate(LocalTimeType.class);
-        System.out.println(json);
-
-        assertThat(json).isEqualTo("{\"test\":\"12:00:00.123456\"}");
-    }
-
-    static class LocalTimeType {
-        private LocalTime test;
-    }
-
-    @DisplayName("9. LocalDateTime")
-    @Test
-    void test9() {
-        String json = generator.generate(LocalDateTimeType.class);
-        System.out.println(json);
-
-        assertThat(json).isEqualTo("{\"test\":\"9999-12-31T12:00:00.123456\"}");
-    }
-
-    static class LocalDateTimeType {
-        private LocalDateTime test;
     }
 }

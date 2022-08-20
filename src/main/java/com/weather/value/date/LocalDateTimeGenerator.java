@@ -1,4 +1,6 @@
-package com.weather.value;
+package com.weather.value.date;
+
+import com.weather.value.ValueGenerator;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;

@@ -67,7 +67,7 @@ public class StandardJsonGenerator implements JsonGenerator {
 
     private String generateNormalType(JsonFieldDefinition definition) {
         Class<?> valueClass = definition.getValueClass();
-        String result = valueGenerators.stream().filter(vg -> vg.isSupported(valueClass))
+        String result = this.valueGenerators.stream().filter(vg -> vg.isSupported(valueClass))
                 .map(vg -> vg.generate(valueClass))
                 .findFirst()
                 .orElseThrow(() -> new NotSupportedFieldException(valueClass + " is not supported type."));

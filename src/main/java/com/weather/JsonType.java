@@ -2,6 +2,9 @@ package com.weather;
 
 import com.weather.exception.NotSupportedFieldException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +20,10 @@ public enum JsonType {
     BOOLEAN,
     NULL,
     OBJECT,
-    ARRAY;
+    ARRAY,
+    LOCAL_DATE,
+    LOCAL_TIME,
+    LOCAL_DATE_TIME;
 
     public static JsonType getJsonType(Class<?> type){
         Objects.requireNonNull(type);
@@ -29,7 +35,13 @@ public enum JsonType {
             return STRING;
         } else if (isNumber(type)){
             return NUMBER;
-        } else if(isObject(type)){
+        } else if (isLocalDate(type)) {
+            return LOCAL_DATE;
+        } else if (isLocalTime(type)) {
+            return LOCAL_TIME;
+        } else if (isLocalDateTime(type)) {
+            return LOCAL_DATE_TIME;
+        } else if (isObject(type)) {
             return OBJECT; // Class Loader 기준으로 찾아오기 때문에 맨 마지막으로 가는게 맞는듯
         }
 
@@ -71,5 +83,17 @@ public enum JsonType {
                 double.class.equals(type) ||
                 Float.class.equals(type) ||
                 Double.class.equals(type);
+    }
+
+    private static boolean isLocalDate(Class<?> type) {
+        return LocalDate.class.isAssignableFrom(type);
+    }
+
+    private static boolean isLocalTime(Class<?> type) {
+        return LocalTime.class.isAssignableFrom(type);
+    }
+
+    private static boolean isLocalDateTime(Class<?> type) {
+        return LocalDateTime.class.isAssignableFrom(type);
     }
 }

@@ -1,6 +1,7 @@
 package com.weather.value;
 
-public interface ValueGenerator {
+public interface
+ValueGenerator {
 
     String generate(Class<?> type);
 

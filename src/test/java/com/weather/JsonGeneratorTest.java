@@ -3,11 +3,13 @@ package com.weather;
 import com.weather.printer.FieldPrinter;
 import com.weather.printer.GenericPrinter;
 import com.weather.value.*;
+import com.weather.value.date.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ class JsonGeneratorTest {
     JsonGenerator generator;
 
     @BeforeEach
-    public void init(){
+    public void init() {
         List<ValueGenerator> generators = new ArrayList<>();
         generators.add(new StringGenerator());
         generators.add(new NumberGenerator());
@@ -33,22 +35,22 @@ class JsonGeneratorTest {
 
     @DisplayName("1. String Type")
     @Test
-    void test1(){
+    void test1() {
         String json = generator.generate(StringType.class);
 
         System.out.println(json);
         assertThat(json).isEqualTo("{" +
-                        "\"test\":\"String\"" +
+                "\"test\":\"String\"" +
                 "}");
     }
 
-    static class StringType{
+    static class StringType {
         private String test;
     }
 
     @DisplayName("2. Number Type")
     @Test
-    void test2(){
+    void test2() {
         String json = generator.generate(NumberType.class);
 
         System.out.println(json);
@@ -63,7 +65,7 @@ class JsonGeneratorTest {
 
     @DisplayName("3. Boolean Test")
     @Test
-    void test3(){
+    void test3() {
         String json = generator.generate(BooleanType.class);
 
         System.out.println(json);
@@ -87,11 +89,11 @@ class JsonGeneratorTest {
 
     private String arrayTestJson() {
         return "{" +
-                    "\"test\":[" +
-                        "[" +
-                            "1" +
-                        "]" +
-                    "]" +
+                "\"test\":[" +
+                "[" +
+                "1" +
+                "]" +
+                "]" +
                 "}";
     }
 
@@ -101,7 +103,7 @@ class JsonGeneratorTest {
 
     @DisplayName("5. Enum Type")
     @Test
-    void test5(){
+    void test5() {
         String json = generator.generate(EnumType.class);
 
         assertThat(json).isEqualTo(enumJson());
@@ -110,57 +112,60 @@ class JsonGeneratorTest {
     @NotNull
     private String enumJson() {
         return "{" +
-                    "\"test\":\"TYPE1\"" +
+                "\"test\":\"TYPE1\"" +
                 "}";
     }
 
-    static class EnumType{
+    static class EnumType {
         private TestEnum test;
     }
 
-    static enum TestEnum{
+    static enum TestEnum {
         TYPE1,
         TYPE2;
     }
+
     @DisplayName("6. Integration")
     @Test
-    void test6(){
+    void test6() {
         String json = generator.generate(Member.class);
 
         System.out.println(json);
         assertThat(json).isEqualTo(integrationJson());
     }
 
-    static  class Member{
+    static class Member {
         private String name;
         private int age;
         private Address address;
         private boolean gender;
         private List<Belonging> belongings;
     }
-    static class Address{
+
+    static class Address {
         private String state;
         private String city;
         private String street;
     }
-    static class Belonging{
+
+    static class Belonging {
         private String name;
         private int count;
     }
 
-    String integrationJson(){
+    String integrationJson() {
         return "{" +
                 "\"name\":\"String\"," +
                 "\"age\":1," +
                 "\"address\":{" +
-                    "\"state\":\"String\"," +
-                    "\"city\":\"String\"," +
-                    "\"street\":\"String\"" +
+                "\"state\":\"String\"," +
+                "\"city\":\"String\"," +
+                "\"street\":\"String\"" +
                 "}," +
                 "\"gender\":true," +
                 "\"belongings\":[{" +
-                    "\"name\":\"String\"," +
-                    "\"count\":1" +
+                "\"name\":\"String\"," +
+                "\"count\":1" +
                 "}]" +
                 "}";
     }

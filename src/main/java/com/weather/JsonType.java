@@ -2,6 +2,7 @@ package com.weather;
 
 import com.weather.exception.NotSupportedFieldException;
 
+import java.time.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -17,25 +18,39 @@ public enum JsonType {
     BOOLEAN,
     NULL,
     OBJECT,
-    ARRAY;
+    ARRAY,
+    LOCAL_DATE,
+    LOCAL_TIME,
+    LOCAL_DATE_TIME,
+    ZONED_DATE_TIME,
+    INSTANT;
 
     public static JsonType getJsonType(Class<?> type){
         Objects.requireNonNull(type);
         if (isArray(type)){
             return ARRAY;
         } else if (isBoolean(type)) {
-            return BOOLEAN;   
+            return BOOLEAN;
         } else if (isString(type)){
             return STRING;
         } else if (isNumber(type)){
             return NUMBER;
-        } else if(isObject(type)){
+        } else if (isLocalDate(type)) {
+            return LOCAL_DATE;
+        } else if (isLocalTime(type)) {
+            return LOCAL_TIME;
+        } else if (isLocalDateTime(type)) {
+            return LOCAL_DATE_TIME;
+        } else if (isZonedDateTime(type)) {
+            return ZONED_DATE_TIME;
+        } else if (isInstant(type)) {
+            return INSTANT;
+        } else if (isObject(type)) {
             return OBJECT; // Class Loader 기준으로 찾아오기 때문에 맨 마지막으로 가는게 맞는듯
         }
 
         throw new NotSupportedFieldException(type + " is not supported.");
     }
-
     private static boolean isObject(Class<?> type) {
         return type.getClassLoader() != null && type.getClassLoader().getParent() != null;
     }
@@ -71,5 +86,25 @@ public enum JsonType {
                 double.class.equals(type) ||
                 Float.class.equals(type) ||
                 Double.class.equals(type);
+    }
+
+    private static boolean isLocalDate(Class<?> type) {
+        return LocalDate.class.isAssignableFrom(type);
+    }
+
+    private static boolean isLocalTime(Class<?> type) {
+        return LocalTime.class.isAssignableFrom(type);
+    }
+
+    private static boolean isLocalDateTime(Class<?> type) {
+        return LocalDateTime.class.isAssignableFrom(type);
+    }
+
+    private static boolean isZonedDateTime(Class<?> type) {
+        return ZonedDateTime.class.isAssignableFrom(type);
+    }
+
+    private static boolean isInstant(Class<?> type) {
+        return Instant.class.isAssignableFrom(type);
     }
 }

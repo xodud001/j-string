@@ -75,6 +75,12 @@ J-String can generate JSON from classes composed of the following types:
   - `List<T>`
   - `Set<T>`
 * `Enum`
+* **Date and Time**
+  * `LocalDate`
+  * `LocalTime`
+  * `LocalDateTime`
+  * `ZonedDateTime`
+  * `Instant`
 
 
 # Sample

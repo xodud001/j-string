@@ -128,7 +128,5 @@ String json = generator.generateFieldsOfType(IntegrationTest.class);
 ```
 
 # To Do
-* support various type
-  - DateTime Types
 * generate a custom value
 

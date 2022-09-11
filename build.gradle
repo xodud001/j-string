@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+
 }
 
 group 'com.weather'
@@ -7,6 +9,18 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.weather.json'
+            artifactId = 'j-string'
+            version = '1.1.0'
+
+            from components.java
+        }
+    }
 }
 
 dependencies {
@@ -24,3 +38,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+targetCompatibility = JavaVersion.VERSION_1_8
